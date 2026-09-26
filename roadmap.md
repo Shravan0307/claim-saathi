@@ -1,0 +1,3 @@
+- [ ] Build guided intake and demo case
+- [ ] Build estate map, action plan, claims, documents, liabilities, and guided unclaimed search
+- [ ] Verify desktop and mobile demo journey
