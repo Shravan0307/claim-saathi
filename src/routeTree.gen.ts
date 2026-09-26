@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActionPlanRouteImport } from './routes/action-plan'
+import { Route as ClaimsRouteImport } from './routes/claims'
 import { Route as EstateMapRouteImport } from './routes/estate-map'
 import { Route as StartRouteImport } from './routes/start'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActionPlanRoute = ActionPlanRouteImport.update({
+  id: '/action-plan',
+  path: '/action-plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClaimsRoute = ClaimsRouteImport.update({
+  id: '/claims',
+  path: '/claims',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstateMapRoute = EstateMapRouteImport.update({
@@ -31,30 +43,38 @@ const StartRoute = StartRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
   '/estate-map': typeof EstateMapRoute
   '/start': typeof StartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
   '/estate-map': typeof EstateMapRoute
   '/start': typeof StartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
   '/estate-map': typeof EstateMapRoute
   '/start': typeof StartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/estate-map' | '/start'
+  fullPaths: '/' | '/action-plan' | '/claims' | '/estate-map' | '/start'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/estate-map' | '/start'
-  id: '__root__' | '/' | '/estate-map' | '/start'
+  to: '/' | '/action-plan' | '/claims' | '/estate-map' | '/start'
+  id: '__root__' | '/' | '/action-plan' | '/claims' | '/estate-map' | '/start'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActionPlanRoute: typeof ActionPlanRoute
+  ClaimsRoute: typeof ClaimsRoute
   EstateMapRoute: typeof EstateMapRoute
   StartRoute: typeof StartRoute
 }
@@ -66,6 +86,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/action-plan': {
+      id: '/action-plan'
+      path: '/action-plan'
+      fullPath: '/action-plan'
+      preLoaderRoute: typeof ActionPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/claims': {
+      id: '/claims'
+      path: '/claims'
+      fullPath: '/claims'
+      preLoaderRoute: typeof ClaimsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estate-map': {
@@ -87,6 +121,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActionPlanRoute: ActionPlanRoute,
+  ClaimsRoute: ClaimsRoute,
   EstateMapRoute: EstateMapRoute,
   StartRoute: StartRoute,
 }
