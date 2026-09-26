@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActionPlanRouteImport } from './routes/action-plan'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ClaimsRouteImport } from './routes/claims'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EstateMapRouteImport } from './routes/estate-map'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const ActionPlanRoute = ActionPlanRouteImport.update({
   id: '/action-plan',
   path: '/action-plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClaimsRoute = ClaimsRouteImport.update({
@@ -62,6 +68,7 @@ const UnclaimedAssetsRoute = UnclaimedAssetsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
+  '/auth': typeof AuthRoute
   '/claims': typeof ClaimsRoute
   '/documents': typeof DocumentsRoute
   '/estate-map': typeof EstateMapRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
+  '/auth': typeof AuthRoute
   '/claims': typeof ClaimsRoute
   '/documents': typeof DocumentsRoute
   '/estate-map': typeof EstateMapRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
+  '/auth': typeof AuthRoute
   '/claims': typeof ClaimsRoute
   '/documents': typeof DocumentsRoute
   '/estate-map': typeof EstateMapRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/action-plan'
+    | '/auth'
     | '/claims'
     | '/documents'
     | '/estate-map'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/action-plan'
+    | '/auth'
     | '/claims'
     | '/documents'
     | '/estate-map'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/action-plan'
+    | '/auth'
     | '/claims'
     | '/documents'
     | '/estate-map'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActionPlanRoute: typeof ActionPlanRoute
+  AuthRoute: typeof AuthRoute
   ClaimsRoute: typeof ClaimsRoute
   DocumentsRoute: typeof DocumentsRoute
   EstateMapRoute: typeof EstateMapRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/action-plan'
       fullPath: '/action-plan'
       preLoaderRoute: typeof ActionPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/claims': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActionPlanRoute: ActionPlanRoute,
+  AuthRoute: AuthRoute,
   ClaimsRoute: ClaimsRoute,
   DocumentsRoute: DocumentsRoute,
   EstateMapRoute: EstateMapRoute,

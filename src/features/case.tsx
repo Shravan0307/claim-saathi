@@ -39,17 +39,21 @@ const Glossary: Record<string,string> = {
 };
 export function meaning(term: string) { return Glossary[term] ?? ''; }
 
-type CaseContext = { estate: EstateCase | null; setEstate: (value: EstateCase | null) => void; completed: string[]; toggleTask: (id:string) => void; uploaded: string[]; addUpload: (name:string) => void; loadDemo: () => void };
+export type DemoUser = { name: string; email: string };
+type CaseContext = { estate: EstateCase | null; setEstate: (value: EstateCase | null) => void; completed: string[]; toggleTask: (id:string) => void; uploaded: string[]; addUpload: (name:string) => void; loadDemo: () => void; user: DemoUser | null; signIn: (user: DemoUser) => void; signOut: () => void };
 const Context = createContext<CaseContext | null>(null);
 export function CaseProvider({children}: {children:ReactNode}) {
   const [estate, setEstateState] = useState<EstateCase | null>(null);
   const [completed, setCompleted] = useState<string[]>([]);
   const [uploaded, setUploaded] = useState<string[]>([]);
-  useEffect(() => { try { const saved = sessionStorage.getItem('claim-saathi-case'); if(saved) setEstateState(JSON.parse(saved)); const done = sessionStorage.getItem('claim-saathi-tasks'); if(done) setCompleted(JSON.parse(done)); const docs = sessionStorage.getItem('claim-saathi-docs'); if(docs) setUploaded(JSON.parse(docs)); } catch { /* ignore invalid demo data */ } }, []);
+  const [user, setUser] = useState<DemoUser | null>(null);
+  useEffect(() => { try { const saved = sessionStorage.getItem('claim-saathi-case'); if(saved) setEstateState(JSON.parse(saved)); const done = sessionStorage.getItem('claim-saathi-tasks'); if(done) setCompleted(JSON.parse(done)); const docs = sessionStorage.getItem('claim-saathi-docs'); if(docs) setUploaded(JSON.parse(docs)); const u = sessionStorage.getItem('claim-saathi-user'); if(u) setUser(JSON.parse(u)); } catch { /* ignore invalid demo data */ } }, []);
   const setEstate = (value: EstateCase | null) => { setEstateState(value); if(value) sessionStorage.setItem('claim-saathi-case', JSON.stringify(value)); else sessionStorage.removeItem('claim-saathi-case'); };
   const toggleTask = (id:string) => { const next = completed.includes(id) ? completed.filter(x=>x!==id) : [...completed,id]; setCompleted(next); sessionStorage.setItem('claim-saathi-tasks',JSON.stringify(next)); toast.success(completed.includes(id) ? 'Task reopened' : 'Task marked complete'); };
   const addUpload = (name:string) => { const next = [...new Set([...uploaded,name])]; setUploaded(next); sessionStorage.setItem('claim-saathi-docs',JSON.stringify(next)); toast.success('Document added to this demo case'); };
   const loadDemo = () => { setEstate(demoCase); setCompleted(['certificates','policies','secure','employer','heirs','bank','insurers','pending']); sessionStorage.setItem('claim-saathi-tasks',JSON.stringify(['certificates','policies','secure','employer','heirs','bank','insurers','pending'])); setUploaded(['Death Certificate','PAN Card','Bank Passbook','Insurance Policy']); sessionStorage.setItem('claim-saathi-docs',JSON.stringify(['Death Certificate','PAN Card','Bank Passbook','Insurance Policy'])); toast.success('Fictional demo case loaded'); };
-  return <Context.Provider value={{estate,setEstate,completed,toggleTask,uploaded,addUpload,loadDemo}}>{children}</Context.Provider>;
+  const signIn = (value: DemoUser) => { setUser(value); sessionStorage.setItem('claim-saathi-user', JSON.stringify(value)); };
+  const signOut = () => { setUser(null); sessionStorage.removeItem('claim-saathi-user'); toast.success('Signed out of this demo session'); };
+  return <Context.Provider value={{estate,setEstate,completed,toggleTask,uploaded,addUpload,loadDemo,user,signIn,signOut}}>{children}</Context.Provider>;
 }
 export function useCase() { const ctx = useContext(Context); if(!ctx) throw new Error('CaseProvider missing'); return ctx; }
