@@ -26,7 +26,7 @@ function AuthPage() {
     if (!email.includes('@')) { setError('Please enter a valid email address.'); return; }
     if (password.length < 4) { setError('Please enter a password (any 4+ characters for this demo).'); return; }
     if (mode === 'signup' && name.trim().length < 2) { setError('Please enter your name.'); return; }
-    const displayName = mode === 'signup' ? name.trim() : (email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Family member');
+    const displayName = mode === 'signup' ? name.trim() : ((email.split('@')[0] ?? '').replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Family member');
     signIn({ name: displayName, email });
     navigate({ to: '/' });
   };
