@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActionPlanRouteImport } from './routes/action-plan'
+import { Route as ClaimsRouteImport } from './routes/claims'
+import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as EstateMapRouteImport } from './routes/estate-map'
+import { Route as LiabilitiesRouteImport } from './routes/liabilities'
+import { Route as StartRouteImport } from './routes/start'
+import { Route as UnclaimedAssetsRouteImport } from './routes/unclaimed-assets'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActionPlanRoute = ActionPlanRouteImport.update({
+  id: '/action-plan',
+  path: '/action-plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClaimsRoute = ClaimsRouteImport.update({
+  id: '/claims',
+  path: '/claims',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentsRoute = DocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstateMapRoute = EstateMapRouteImport.update({
+  id: '/estate-map',
+  path: '/estate-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiabilitiesRoute = LiabilitiesRouteImport.update({
+  id: '/liabilities',
+  path: '/liabilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnclaimedAssetsRoute = UnclaimedAssetsRouteImport.update({
+  id: '/unclaimed-assets',
+  path: '/unclaimed-assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
+  '/documents': typeof DocumentsRoute
+  '/estate-map': typeof EstateMapRoute
+  '/liabilities': typeof LiabilitiesRoute
+  '/start': typeof StartRoute
+  '/unclaimed-assets': typeof UnclaimedAssetsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
+  '/documents': typeof DocumentsRoute
+  '/estate-map': typeof EstateMapRoute
+  '/liabilities': typeof LiabilitiesRoute
+  '/start': typeof StartRoute
+  '/unclaimed-assets': typeof UnclaimedAssetsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/action-plan': typeof ActionPlanRoute
+  '/claims': typeof ClaimsRoute
+  '/documents': typeof DocumentsRoute
+  '/estate-map': typeof EstateMapRoute
+  '/liabilities': typeof LiabilitiesRoute
+  '/start': typeof StartRoute
+  '/unclaimed-assets': typeof UnclaimedAssetsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/action-plan'
+    | '/claims'
+    | '/documents'
+    | '/estate-map'
+    | '/liabilities'
+    | '/start'
+    | '/unclaimed-assets'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/action-plan'
+    | '/claims'
+    | '/documents'
+    | '/estate-map'
+    | '/liabilities'
+    | '/start'
+    | '/unclaimed-assets'
+  id:
+    | '__root__'
+    | '/'
+    | '/action-plan'
+    | '/claims'
+    | '/documents'
+    | '/estate-map'
+    | '/liabilities'
+    | '/start'
+    | '/unclaimed-assets'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActionPlanRoute: typeof ActionPlanRoute
+  ClaimsRoute: typeof ClaimsRoute
+  DocumentsRoute: typeof DocumentsRoute
+  EstateMapRoute: typeof EstateMapRoute
+  LiabilitiesRoute: typeof LiabilitiesRoute
+  StartRoute: typeof StartRoute
+  UnclaimedAssetsRoute: typeof UnclaimedAssetsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/action-plan': {
+      id: '/action-plan'
+      path: '/action-plan'
+      fullPath: '/action-plan'
+      preLoaderRoute: typeof ActionPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/claims': {
+      id: '/claims'
+      path: '/claims'
+      fullPath: '/claims'
+      preLoaderRoute: typeof ClaimsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documents': {
+      id: '/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estate-map': {
+      id: '/estate-map'
+      path: '/estate-map'
+      fullPath: '/estate-map'
+      preLoaderRoute: typeof EstateMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/liabilities': {
+      id: '/liabilities'
+      path: '/liabilities'
+      fullPath: '/liabilities'
+      preLoaderRoute: typeof LiabilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unclaimed-assets': {
+      id: '/unclaimed-assets'
+      path: '/unclaimed-assets'
+      fullPath: '/unclaimed-assets'
+      preLoaderRoute: typeof UnclaimedAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActionPlanRoute: ActionPlanRoute,
+  ClaimsRoute: ClaimsRoute,
+  DocumentsRoute: DocumentsRoute,
+  EstateMapRoute: EstateMapRoute,
+  LiabilitiesRoute: LiabilitiesRoute,
+  StartRoute: StartRoute,
+  UnclaimedAssetsRoute: UnclaimedAssetsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
